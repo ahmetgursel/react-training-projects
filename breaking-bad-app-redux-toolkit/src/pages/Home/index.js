@@ -6,26 +6,28 @@ import Loading from '../../components/Loading';
 import Error from '../../components/Error';
 import './index.css';
 
+import { Link } from 'react-router-dom';
+
 function Home() {
   const dispatch = useDispatch();
   const characters = useSelector((state) => state.characters.items);
-  const isLoading = useSelector((state) => state.characters.isLoading);
+  const status = useSelector((state) => state.characters.status);
   const nextPage = useSelector((state) => state.characters.page);
   const hasNextPage = useSelector((state) => state.characters.hasNextPage);
   const error = useSelector((state) => state.characters.error);
 
   useEffect(() => {
-    dispatch(fetchCharacters());
-  }, [dispatch]);
+    if (status === 'idle') {
+      dispatch(fetchCharacters());
+    }
+  }, [dispatch, status]);
 
-  if (error) {
+  if (status === 'failed') {
     return <Error message={error} />;
   }
 
   return (
     <div>
-      <h1>Characters</h1>
-
       <Masonry
         breakpointCols={3}
         className='my-masonry-grid'
@@ -33,18 +35,20 @@ function Home() {
       >
         {characters.map((character) => (
           <div key={character.char_id}>
-            <img
-              alt={character.name}
-              src={character.img}
-              className='character'
-            />
-            <div className='char_name'>{character.name}</div>
+            <Link to={`/char/${character.char_id}`}>
+              <img
+                alt={character.name}
+                src={character.img}
+                className='character'
+              />
+              <div className='char_name'>{character.name}</div>
+            </Link>
           </div>
         ))}
       </Masonry>
       <div style={{ padding: '20px 0 40px 0', textAlign: 'center' }}>
-        {isLoading && <Loading />}
-        {hasNextPage && !isLoading && (
+        {status === 'loading' && <Loading />}
+        {hasNextPage && status !== 'loading' && (
           <button onClick={() => dispatch(fetchCharacters(nextPage))}>
             Load More ({nextPage}){' '}
           </button>
