@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Detail from './pages/Detail';
 import Quotes from './pages/Quotes';
+import QuoteDetail from './pages/QuoteDetail';
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/char/:char_id' component={Detail} />
-          <Route path='/quotes' component={Quotes} />
+          <Route exact path='/quotes' component={Quotes} />
+          <Route path='/quotes/:quote_id' component={QuoteDetail} />
         </Switch>
       </div>
     </Router>
