@@ -16,7 +16,7 @@ function Form() {
     }
 
     const names = name.split(',');
-    const data = names.map((name) => ({ id: nanoid, name }));
+    const data = names.map((name) => ({ id: nanoid(), name }));
     dispatch(addContacts(data));
     setName('');
   };
