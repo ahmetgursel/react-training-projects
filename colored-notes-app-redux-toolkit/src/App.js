@@ -6,7 +6,7 @@ import React from 'react';
 
 function App() {
   const notes = useSelector(noteSelectors.selectAll);
-  console.log(notes);
+
   return (
     <div
       className='App'

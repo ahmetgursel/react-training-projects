@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Input, Center, Box } from '@chakra-ui/react';
+import { searchText } from '../../redux/noteSlice';
 
 function Search() {
+  const dispatch = useDispatch();
   const [value, setValue] = useState('');
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //
-  //   console.log('submitted');
-  // };
+  useEffect(() => {
+    dispatch(searchText(value));
+  }, [value]);
 
   return (
     <>

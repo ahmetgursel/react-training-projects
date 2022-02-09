@@ -10,8 +10,12 @@ const noteSlice = createSlice({
   initialState: initialState,
   reducers: {
     addNotes: noteAdaptor.addOne,
+    deleteNotes: noteAdaptor.removeOne,
+    searchText: (state, action) => {
+      state.searchText = action.payload;
+    },
   },
 });
 
-export const { addNotes } = noteSlice.actions;
+export const { addNotes, searchText, deleteNotes } = noteSlice.actions;
 export default noteSlice.reducer;
